@@ -1,5 +1,5 @@
 import React, {Fragment, useMemo, useState} from 'react';
-import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {Searchbar, useTheme} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CustomModal from 'src/Components/Custom/CustomModal/CustomModal';
@@ -10,7 +10,6 @@ import Row from 'src/Components/Shared/Row/Row';
 import Spacer from 'src/Components/Shared/Spacer/Spacer';
 import Typography from 'src/Components/Shared/Typography/Typography';
 import scaler from 'src/Utils/Shared/scaler';
-import {localOrNetworkImage} from 'src/Helpers';
 
 function FoodListModal({openFoodList, onDismiss, data}: any) {
   const theme = useTheme();
@@ -19,40 +18,16 @@ function FoodListModal({openFoodList, onDismiss, data}: any) {
   const styles = useMemo(
     () =>
       StyleSheet.create({
-        bgStyle: {
-          backgroundColor: 'white',
-          height: scaler(400),
-          width: '100%',
-          borderRadius: scaler(10),
-        },
-        labelStyle: {
-          fontWeight: '700',
-          color: theme.colors.white,
-          fontSize: scaler(14),
-        },
         searchStyle: {
           backgroundColor: theme.colors.white,
           elevation: 0.5,
           paddingLeft: scaler(10),
           borderRadius: scaler(10),
         },
-        viewStyle: {
-          backgroundColor: 'white',
-          borderRadius: scaler(10),
-        },
         rowStyle: {
           alignItems: 'center',
           backgroundColor: theme.colors.white,
           padding: scaler(5),
-        },
-        rowViewStyle: {
-          height: scaler(40),
-          width: scaler(40),
-          backgroundColor: 'lightpink',
-          borderRadius: scaler(5),
-        },
-        iconStyle: {
-          top: scaler(5),
         },
       }),
     [theme.colors.white],
@@ -90,11 +65,19 @@ function FoodListModal({openFoodList, onDismiss, data}: any) {
               <Fragment key={index}>
                 <TouchableOpacity onPress={() => handleOpenId(food.id)}>
                   <Row style={styles.rowStyle}>
-                    <View style={styles.rowViewStyle}>
-                      <Center>
-                        <Image source={localOrNetworkImage(food.image)} />
-                      </Center>
-                    </View>
+                    <Center>
+                      <Image
+                        source={{
+                          uri: 'https://picsum.photos/200/300?random=',
+                        }}
+                        style={{
+                          height: scaler(40),
+                          width: scaler(40),
+                          borderRadius: scaler(5),
+                        }}
+                        resizeMode={'cover'}
+                      />
+                    </Center>
                     <Spacer size={scaler(8)} horizontal />
                     <Typography
                       fontSize={scaler(14)}
@@ -121,6 +104,7 @@ function FoodListModal({openFoodList, onDismiss, data}: any) {
                       <Fragment key={`${item.is}${index}`}>
                         <Row style={styles.rowStyle}>
                           <Spacer size={scaler(8)} horizontal />
+                          <Spacer size={scaler(28)} />
                           <Typography
                             fontSize={scaler(14)}
                             color={theme.colors.ebony}
